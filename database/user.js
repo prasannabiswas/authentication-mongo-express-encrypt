@@ -2,16 +2,13 @@ require("dotenv").config();
 const m = require("mongoose");
 const passportLocalMongoose = require("passport-local-mongoose");
 // const encrypt = require("mongoose-encryption");
+const findOrCreate = require("mongoose-findorcreate");
 
 const userSchema = new m.Schema({
-    username: {
-        type: String,
-        required: true
-    }
-    // password: {
-    //     type: String,
-    //     required: true
-    // }
+    username: String,
+    password:  String,
+    googleId: String,
+    secret: String
 });
 
 // Encryption process
@@ -22,5 +19,6 @@ const userSchema = new m.Schema({
 
 // Passport process setup
 userSchema.plugin(passportLocalMongoose);
+userSchema.plugin(findOrCreate);
 
 module.exports = m.model("User",userSchema);
